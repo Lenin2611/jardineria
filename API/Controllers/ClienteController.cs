@@ -149,22 +149,5 @@ namespace API.Controllers
             }
             return clientesPedidos;
         }
-
-        [HttpGet("cantidadpedidos")] // 2611
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<ClientesCantidadPedidoDto>>> GetClienteGamas()
-        {
-            var results = await (from cliente in _context.Clientes
-                                 join pedido in _context.Pedidos on cliente.Id equals pedido.IdClienteFk
-                                 join detallepedido in _context.DetallePedidos on pedido.Id equals detallepedido.IdPedidoFk
-                                 join producto in _context.Productos on detallepedido.IdProductoFk equals producto.Id
-                                 select new ClientesCantidadPedidoDto
-                                 {
-                                     Nombre = cliente.NombreCliente,
-                                     Cantidad = 0
-                                 })
-                            .ToListAsync();
     }
 }
